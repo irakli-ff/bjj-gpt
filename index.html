@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imaginary BJJ Match</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        button {
+            margin-top: 20px;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://unpkg.com/typeit@7.0.4/dist/typeit.min.js"></script>
+</head>
+<body>
+    <h1>Imaginary BJJ Match</h1>
+    <p id="moveDescription"></p>
+    <button onclick="displayNextMove()">Next Move</button>
+    <button onclick="displayPreviousMove()" style="margin-left: 10px;">Previous Move</button>
+    <!-- Add this HTML below the <button> element -->
+    <div id="progressBarContainer" style="width: 100%; background-color: #ccc; height: 10px; margin-top: 20px;">
+        <div id="progressBar" style="width: 0; background-color: #007bff; height: 100%;"></div>
+    </div>
+    
+    <script>
+        const moves = [
+            'User grabs the AI\'s collar across with their right hand.',
+            'AI secures a grip on the user\'s right sleeve with their left hand and grabs the user\'s left lapel with their right hand.',
+            'User grabs AI\'s left hand sleeve and positions their body on the ground on their side.',
+            'AI establishes a knee-on-belly position.',
+            'User grabs AI\'s leg, pulls it towards them, and gets a closed guard.',
+            'AI works to break the closed guard and transition to an open guard position.',
+            'User puts both of their legs on AI\'s hips, pushes AI away, and executes a judo-style sweep.',
+            'AI performs a breakfall and establishes a defensive position.',
+            'User stabilizes their position.',
+            'AI escapes and recovers their guard, putting the user back into a closed guard position.',
+            'User stabilizes their position again.',
+            'AI stands up and breaks the closed guard, transitioning to an open guard position.',
+            'User resists AI\'s attempt at a knee slice pass.',
+            'AI transitions to a leg weave pass and moves into a side control position.',
+            'User crosses their legs to defend against side control.',
+            'AI switches to a modified scarf hold (kesa gatame) and locks in a tight Americana submission, forcing the user to tap out.'
+        ];
+        
+        let currentMove = 0;
+        const moveDescriptionElement = document.getElementById('moveDescription');
+
+        <!-- Add this JavaScript code inside the <script> tag -->
+        function updateProgressBar() {
+            const progressBar = document.getElementById('progressBar');
+            const progressPercentage = (currentMove / moves.length) * 100;
+            progressBar.style.width = progressPercentage + '%';
+        }
+        
+        function displayNextMove() {
+            if (currentMove < moves.length) {
+                moveDescriptionElement.classList.remove('animate__fadeIn');
+                setTimeout(() => {
+                    moveDescriptionElement.classList.add('animate__fadeIn');
+                    moveDescriptionElement.innerHTML = '';
+
+                    new TypeIt(moveDescriptionElement, {
+                        strings: moves[currentMove],
+                        speed: 50,
+                        startDelay: 100
+                    }).go();
+
+                    currentMove++;
+                    updateProgressBar();
+                }, 100);
+            } else {
+                alert('The match is over.');
+            }
+        }
+
+        function displayPreviousMove() {
+            if (currentMove > 1) {
+                currentMove -= 2;
+                displayNextMove();
+            }
+        }
+    </script>
+</body>
+</html>
